@@ -174,25 +174,63 @@
     });
   }
 
-  // ---------- Lightbox Modal (Pantalla Completa) ----------
+  // ---------- Lightbox Modal con Zoom (+ / - / Reset / Drag) ----------
   function initLightbox() {
     let modal = document.querySelector('.lightbox-modal');
     if (!modal) {
       modal = document.createElement('div');
       modal.className = 'lightbox-modal';
       modal.innerHTML = `
-        <button class="lightbox-close" aria-label="Cerrar">&times;</button>
-        <img class="lightbox-img" src="" alt="Vista ampliada">
+        <div class="lightbox-controls">
+          <button class="lightbox-btn btn-zoom-in" title="Acercar (+)">+</button>
+          <button class="lightbox-btn btn-zoom-out" title="Alejar (-)">−</button>
+          <button class="lightbox-btn btn-zoom-reset" title="Restablecer (1:1)" style="font-size:0.72rem; font-weight:700;">1:1</button>
+          <span class="lightbox-zoom-level">100%</span>
+          <button class="lightbox-btn lightbox-close" title="Cerrar (Esc)" style="margin-left:6px; background:rgba(239,68,68,0.25); border-color:rgba(239,68,68,0.5);">&times;</button>
+        </div>
+        <div class="lightbox-container">
+          <img class="lightbox-img" src="" alt="Vista ampliada">
+        </div>
       `;
       document.body.appendChild(modal);
     }
 
+    const container = modal.querySelector('.lightbox-container');
     const modalImg = modal.querySelector('.lightbox-img');
     const closeBtn = modal.querySelector('.lightbox-close');
+    const btnIn = modal.querySelector('.btn-zoom-in');
+    const btnOut = modal.querySelector('.btn-zoom-out');
+    const btnReset = modal.querySelector('.btn-zoom-reset');
+    const zoomText = modal.querySelector('.lightbox-zoom-level');
+
+    let scale = 1;
+    let translateX = 0;
+    let translateY = 0;
+    let isDragging = false;
+    let startX = 0;
+    let startY = 0;
+
+    function updateTransform() {
+      modalImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+      zoomText.textContent = `${Math.round(scale * 100)}%`;
+    }
+
+    function setScale(newScale) {
+      scale = Math.min(Math.max(0.5, newScale), 5); // 50% a 500%
+      if (scale === 1) {
+        translateX = 0;
+        translateY = 0;
+      }
+      updateTransform();
+    }
 
     function openModal(src, alt) {
       modalImg.src = src;
-      modalImg.alt = alt || 'Imagen en pantalla completa';
+      modalImg.alt = alt || 'Imagen ampliada';
+      scale = 1;
+      translateX = 0;
+      translateY = 0;
+      updateTransform();
       modal.classList.add('active');
       document.body.style.overflow = 'hidden';
     }
@@ -202,22 +240,66 @@
       document.body.style.overflow = '';
     }
 
+    // Botones de Zoom
+    btnIn.addEventListener('click', (e) => { e.stopPropagation(); setScale(scale + 0.35); });
+    btnOut.addEventListener('click', (e) => { e.stopPropagation(); setScale(scale - 0.35); });
+    btnReset.addEventListener('click', (e) => { e.stopPropagation(); setScale(1); });
+    closeBtn.addEventListener('click', (e) => { e.stopPropagation(); closeModal(); });
+
+    // Rueda del ratón (Wheel Zoom)
+    container.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const delta = e.deltaY < 0 ? 0.2 : -0.2;
+      setScale(scale + delta);
+    }, { passive: false });
+
+    // Arrastrar (Pan / Drag)
+    container.addEventListener('mousedown', (e) => {
+      if (e.target.closest('.lightbox-controls')) return;
+      isDragging = true;
+      startX = e.clientX - translateX;
+      startY = e.clientY - translateY;
+      container.classList.add('dragging');
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      translateX = e.clientX - startX;
+      translateY = e.clientY - startY;
+      updateTransform();
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (isDragging) {
+        isDragging = false;
+        container.classList.remove('dragging');
+      }
+    });
+
+    // Cerrar al hacer clic en el fondo
+    container.addEventListener('click', (e) => {
+      if (e.target === container) {
+        closeModal();
+      }
+    });
+
+    // Teclas directas
+    document.addEventListener('keydown', (e) => {
+      if (!modal.classList.contains('active')) return;
+      if (e.key === 'Escape') closeModal();
+      if (e.key === '+' || e.key === '=') setScale(scale + 0.35);
+      if (e.key === '-' || e.key === '_') setScale(scale - 0.35);
+      if (e.key === '0' || e.key.toLowerCase() === 'r') setScale(1);
+    });
+
+    // Asignar a todas las imágenes .img-frame img y .img-zoomable
     document.querySelectorAll('.img-frame img, .img-zoomable').forEach(img => {
       img.classList.add('img-zoomable');
-      img.title = 'Haz clic para ver en pantalla completa';
+      img.title = 'Haz clic para abrir en el visor HD con zoom (+ / -)';
       img.addEventListener('click', (e) => {
         e.stopPropagation();
         openModal(img.src, img.alt);
       });
-    });
-
-    if (closeBtn) closeBtn.addEventListener('click', closeModal);
-    modal.addEventListener('click', closeModal);
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && modal.classList.contains('active')) {
-        closeModal();
-      }
     });
   }
 
