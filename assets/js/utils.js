@@ -216,7 +216,7 @@
     }
 
     function setScale(newScale) {
-      scale = Math.min(Math.max(0.5, newScale), 5); // 50% a 500%
+      scale = Math.min(Math.max(0.1, newScale), 20); // 10% a 2000%
       if (scale === 1) {
         translateX = 0;
         translateY = 0;
@@ -241,15 +241,15 @@
     }
 
     // Botones de Zoom
-    btnIn.addEventListener('click', (e) => { e.stopPropagation(); setScale(scale + 0.35); });
-    btnOut.addEventListener('click', (e) => { e.stopPropagation(); setScale(scale - 0.35); });
+    btnIn.addEventListener('click', (e) => { e.stopPropagation(); setScale(scale + 0.5); });
+    btnOut.addEventListener('click', (e) => { e.stopPropagation(); setScale(scale - 0.5); });
     btnReset.addEventListener('click', (e) => { e.stopPropagation(); setScale(1); });
     closeBtn.addEventListener('click', (e) => { e.stopPropagation(); closeModal(); });
 
     // Rueda del ratón (Wheel Zoom)
     container.addEventListener('wheel', (e) => {
       e.preventDefault();
-      const delta = e.deltaY < 0 ? 0.2 : -0.2;
+      const delta = e.deltaY < 0 ? 0.4 : -0.4;
       setScale(scale + delta);
     }, { passive: false });
 
@@ -287,8 +287,8 @@
     document.addEventListener('keydown', (e) => {
       if (!modal.classList.contains('active')) return;
       if (e.key === 'Escape') closeModal();
-      if (e.key === '+' || e.key === '=') setScale(scale + 0.35);
-      if (e.key === '-' || e.key === '_') setScale(scale - 0.35);
+      if (e.key === '+' || e.key === '=') setScale(scale + 0.5);
+      if (e.key === '-' || e.key === '_') setScale(scale - 0.5);
       if (e.key === '0' || e.key.toLowerCase() === 'r') setScale(1);
     });
 
