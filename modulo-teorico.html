@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo Teórico — Fundamentos del Vuelo FPV | Dron FPV Manta 3.6"</title>
+  <meta name="description"
+    content="Módulo teórico completo sobre los fundamentos del vuelo FPV: qué es, cómo funciona, partes del dron, modos de vuelo, comunicaciones y normativa DGAC.">
+  <link rel="icon" type="image/webp" href="assets/images/logo-liceo.webp">
+  <link rel="stylesheet" href="assets/css/main.css">
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" role="navigation" aria-label="Navegación principal">
+    <div class="navbar-inner">
+      <a href="index.html" class="navbar-brand">
+        <img src="assets/images/logo-liceo.webp" alt="Logo Liceo Bicentenario San Nicolás" width="44" height="44">
+        <div class="brand-text">
+          <span class="brand-name">Liceo Bicentenario — Operaciones de Drones</span>
+          <span class="brand-sub">Dron FPV Manta 3.6"</span>
+        </div>
+      </a>
+      <div class="navbar-nav" id="main-nav">
+        <a href="index.html" class="nav-link">Inicio</a>
+        <a href="modulo-teorico.html" class="nav-link active">Módulo Teórico</a>
+        <a href="modulo-armado.html" class="nav-link">Armado y Config.</a>
+      </div>
+      <div class="navbar-actions">
+        <button class="theme-toggle" aria-label="Cambiar tema">
+          <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5" />
+            <line x1="12" y1="1" x2="12" y2="3" />
+            <line x1="12" y1="21" x2="12" y2="23" />
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+            <line x1="1" y1="12" x2="3" y2="12" />
+            <line x1="21" y1="12" x2="23" y2="12" />
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+          </svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" style="display:none">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+          </svg>
+        </button>
+        <button class="mobile-menu-btn" aria-label="Abrir menú" aria-expanded="false" aria-controls="main-nav">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO DEL MÓDULO -->
+  <section class="hero" id="inicio" style="min-height: 50vh;">
+    <div class="hero-bg" style="background-image: url('assets/images/hero-teorico.webp');"></div>
+    <div class="hero-particles"></div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <div class="hero-badge-dot"></div>
+        Módulo 1 — Fundamentos Teóricos
+      </div>
+      <h1 class="hero-title display">
+        Vuelo <span class="accent">FPV</span><br>Desde Cero
+      </h1>
+      <p class="hero-subtitle body-lg text-muted">
+        Conceptos de física, electrónica, comunicaciones y normativa para entender el vuelo en primera persona.
+      </p>
+      <div class="hero-actions" style="margin-top: var(--space-xl);">
+        <a href="#que-es-fpv" class="btn btn-primary btn-shimmer ripple">
+          Comenzar a aprender
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 5v14M5 12l7 7 7-7" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ÍNDICE DE TEMAS -->
+  <section class="section-sm" style="background: var(--bg-tertiary);">
+    <div class="container">
+      <div class="classes-grid">
+        <a href="#que-es-fpv" class="class-card glow-card reveal reveal-delay-1">
+          <div class="class-card-icon">🎯</div>
+          <h3>Sección 1</h3>
+          <p class="heading-md" style="margin-bottom: var(--space-sm); color: var(--text-primary);">¿Qué es el vuelo
+            FPV?</p>
+          <p>Definición, diferencias con drones comerciales, y el principio del control en lazo cerrado PID.</p>
+          <span class="btn btn-ghost" style="margin-top: auto;">Ver sección <svg width="16" height="16"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg></span>
+        </a>
+        <a href="#clasificaciones" class="class-card glow-card reveal reveal-delay-2">
+          <div class="class-card-icon">📊</div>
+          <h3>Sección 2</h3>
+          <p class="heading-md" style="margin-bottom: var(--space-sm); color: var(--text-primary);">Clasificaciones y
+            Categorías</p>
+          <p>Tipos de drones FPV según tamaño, aplicación y entorno de vuelo.</p>
+          <span class="btn btn-ghost" style="margin-top: auto;">Ver sección <svg width="16" height="16"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg></span>
+        </a>
+        <a href="#modos-vuelo" class="class-card glow-card reveal reveal-delay-3">
+          <div class="class-card-icon">🎮</div>
+          <h3>Sección 3</h3>
+          <p class="heading-md" style="margin-bottom: var(--space-sm); color: var(--text-primary);">Modos de Vuelo</p>
+          <p>Angle, Horizon y Acro: cómo funciona cada modo y cuándo usarlo.</p>
+          <span class="btn btn-ghost" style="margin-top: auto;">Ver sección <svg width="16" height="16"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg></span>
+        </a>
+        <a href="#anatomia" class="class-card glow-card reveal reveal-delay-1">
+          <div class="class-card-icon">🔩</div>
+          <h3>Sección 4</h3>
+          <p class="heading-md" style="margin-bottom: var(--space-sm); color: var(--text-primary);">Anatomía del Dron
+          </p>
+          <p>Función de cada componente: FC, ESC, motores, VTX, cámara y receptor.</p>
+          <span class="btn btn-ghost" style="margin-top: auto;">Ver sección <svg width="16" height="16"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg></span>
+        </a>
+        <a href="#comunicaciones" class="class-card glow-card reveal reveal-delay-2">
+          <div class="class-card-icon">📡</div>
+          <h3>Sección 5</h3>
+          <p class="heading-md" style="margin-bottom: var(--space-sm); color: var(--text-primary);">Radio y Video</p>
+          <p>Protocolo ELRS, transmisión de video analógico vs. digital, y frecuencias.</p>
+          <span class="btn btn-ghost" style="margin-top: auto;">Ver sección <svg width="16" height="16"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg></span>
+        </a>
+        <a href="#baterias" class="class-card glow-card reveal reveal-delay-3">
+          <div class="class-card-icon">🔋</div>
+          <h3>Sección 6</h3>
+          <p class="heading-md" style="margin-bottom: var(--space-sm); color: var(--text-primary);">Baterías y Energía
+          </p>
+          <p>LiPo vs. LiHV, voltaje nominal, factor C, y almacenamiento seguro.</p>
+          <span class="btn btn-ghost" style="margin-top: auto;">Ver sección <svg width="16" height="16"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg></span>
+        </a>
+        <a href="#normativa" class="class-card glow-card reveal reveal-delay-4"
+          style="border: 2px solid var(--accent);">
+          <div class="class-card-icon"
+            style="background: linear-gradient(135deg, rgba(249,115,22,0.3), rgba(249,115,22,0.1)); color: var(--accent-dark);">
+            ⚖️</div>
+          <h3>Sección 7</h3>
+          <p class="heading-md" style="margin-bottom: var(--space-sm); color: var(--text-primary);">Normativa DGAC Chile
+          </p>
+          <p>DAN 91, DAN 151 y recomendaciones de seguridad para el taller escolar.</p>
+          <span class="btn btn-primary" style="margin-top: auto;">Ver sección <svg width="16" height="16"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN 1: ¿QUÉ ES FPV? -->
+  <section class="section" id="que-es-fpv">
+    <div class="container">
+      <div class="reveal" style="margin-bottom: var(--space-2xl);">
+        <p class="section-label">Sección 1</p>
+        <h2 class="heading-xl" style="margin-bottom: var(--space-md);">¿Qué es el Vuelo FPV?</h2>
+      </div>
+
+      <div class="card reveal">
+        <div class="card-header">
+          <div class="card-icon">🎯</div>
+          <h3>Primera Persona en el Aire</h3>
+        </div>
+        <div class="card-body">
+          <p>El vuelo en primera persona (<strong>FPV, First Person View</strong>) es una disciplina avanzada de la
+            robótica aérea donde el piloto percibe el entorno de vuelo en tiempo real a través de la perspectiva de una
+            cámara montada en la aeronave, como si estuviese a bordo de la cabina.</p>
+          <p>Esta experiencia inmersiva se logra mediante un sistema de transmisión de señales inalámbricas
+            bidireccionales que comprende la captura de imágenes, el procesamiento de datos, la modulación de
+            radiofrecuencia y la proyección visual de ultra baja latencia en unas gafas FPV.</p>
+
+          <div class="alert-box alert-info">
+            <strong>Diferencia clave:</strong> Los drones comerciales (DJI, etc.) tienen estabilización automática y
+            GPS. Los drones FPV acrobáticos eliminan esa asistencia para dar control total al piloto.
+          </div>
+
+          <h4 style="margin: var(--space-lg) 0 var(--space-md); font-family: var(--font-heading); font-size: 1.15rem;">
+            El Control PID</h4>
+          <p>El controlador de vuelo ejecuta un lazo de retroalimentación <strong>PID (Proporcional, Integral,
+              Derivativo)</strong> que compara constantemente la velocidad angular solicitada por el piloto con las
+            lecturas del giroscopio, aplicando correcciones en tiempo real a los cuatro motores.</p>
+        </div>
+      </div>
+
+      <!-- Imagen del dron FPV en general -->
+      <div class="reveal" style="margin-top: var(--space-xl);">
+        <div class="img-grid">
+          <div class="img-frame">
+            <img src="assets/images/drone-fpv-overview.webp" alt="Vista general de un dron FPV"
+              onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'><div class=\'img-placeholder-icon\'>🚁</div><p>Imagen del dron FPV — Vista general</p><code>assets/images/drone-fpv-overview.jpg</code></div>'">
+            <div class="img-caption">Vista general de un dron FPV acrobático</div>
+          </div>
+          <div class="img-frame">
+            <img src="assets/images/fpv-goggles.jpg" alt="Gafas FPV"
+              onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'><div class=\'img-placeholder-icon\'>🥽</div><p>Gafas FPV — Vista en primera persona</p><code>assets/images/fpv-goggles.jpg</code></div>'">
+            <div class="img-caption">Gafas FPV para la visualización en tiempo real</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN 2: CLASIFICACIONES -->
+  <section class="section" id="clasificaciones" style="background: var(--bg-tertiary);">
+    <div class="container">
+      <div class="reveal" style="margin-bottom: var(--space-2xl);">
+        <p class="section-label">Sección 2</p>
+        <h2 class="heading-xl" style="margin-bottom: var(--space-md);">Clasificaciones de Drones FPV</h2>
+        <p class="body-lg" style="max-width: 700px;">Los multirrotores FPV se clasifican principalmente por el diámetro
+          de sus hélices, peso y entorno de operación.</p>
+      </div>
+
+      <div class="card reveal">
+        <div class="card-header">
+          <div class="card-icon">📊</div>
+          <h3>Tabla de Categorías</h3>
+        </div>
+        <div class="card-body" style="padding: 0;">
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Categoría</th>
+                  <th>Hélice</th>
+                  <th>Peso</th>
+                  <th>Entorno</th>
+                  <th>Aplicación</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Micro Whoop</strong></td>
+                  <td>31 – 45 mm</td>
+                  <td>18 – 45 g</td>
+                  <td>Interiores</td>
+                  <td>Entrenamiento inicial, carreras en espacios reducidos</td>
+                </tr>
+                <tr>
+                  <td><strong>Toothpick / Ultra-light</strong></td>
+                  <td>2.0" – 3.0"</td>
+                  <td>50 – 110 g</td>
+                  <td>Parques pequeños</td>
+                  <td>Acrobacia de baja inercia y bajo ruido</td>
+                </tr>
+                <tr>
+                  <td><strong>Cinewhoop</strong></td>
+                  <td>2.5" – 3.5"</td>
+                  <td>150 – 450 g</td>
+                  <td>Mixto, cerca de personas</td>
+                  <td>Video cinematográfico con ductos protectores</td>
+                </tr>
+                <tr style="background: var(--accent-soft);">
+                  <td><strong>⭐ Manta 3.6" (Nuestro)</strong></td>
+                  <td><strong>3.6"</strong></td>
+                  <td><strong>~250 g</strong></td>
+                  <td>Exteriores abiertos</td>
+                  <td>Freestyle, grabaciones, taller escolar</td>
+                </tr>
+                <tr>
+                  <td><strong>Freestyle Estándar</strong></td>
+                  <td>5.0" – 5.1"</td>
+                  <td>550 – 800 g</td>
+                  <td>Campos abiertos</td>
+                  <td>Acrobacia alta velocidad, cámaras HD pesadas</td>
+                </tr>
+                <tr>
+                  <td><strong>Long Range</strong></td>
+                  <td>7.0" – 10.0"</td>
+                  <td>800 – 1800 g</td>
+                  <td>Grandes extensiones</td>
+                  <td>Vuelos larga distancia, cartografía</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN 3: MODOS DE VUELO -->
+  <section class="section" id="modos-vuelo">
+    <div class="container">
+      <div class="reveal" style="margin-bottom: var(--space-2xl);">
+        <p class="section-label">Sección 3</p>
+        <h2 class="heading-xl" style="margin-bottom: var(--space-md);">Modos de Vuelo</h2>
+      </div>
+
+      <div class="accordion reveal">
+        <div class="accordion-item">
+          <button class="accordion-trigger" id="acc-angle">
+            <span>🟢 Modo Estabilizado (Angle / Level)</span>
+            <div class="accordion-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </div>
+          </button>
+          <div class="accordion-content">
+            <p>El giroscopio y el acelerómetro trabajan en conjunto para <strong>limitar el ángulo máximo de
+                inclinación</strong> (usualmente a 45° o 55°). Al soltar los mandos de la emisora, la aeronave vuelve de
+              forma inmediata a la posición horizontal respecto al suelo.</p>
+            <p>Es el modo ideal para <strong>principiantes</strong>. El dron se comporta de forma muy similar a los
+              drones comerciales estabilizados.</p>
+            <div class="alert-box alert-success" style="margin-top: var(--space-md);">
+              ✅ <strong>Recomendado para:</strong> Primeras prácticas, aprendizaje inicial, vuelos de demostración en
+              taller.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger" id="acc-horizon">
+            <span>🟡 Modo Horizonte (Horizon)</span>
+            <div class="accordion-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </div>
+          </button>
+          <div class="accordion-content">
+            <p>Permite realizar <strong>rotaciones completas de 360°</strong> cuando las palancas se llevan a sus
+              límites físicos, pero mantiene el comportamiento de nivelación automática cuando los mandos retornan al
+              centro.</p>
+            <p>Es un modo intermedio que permite explorar acrobacias manteniendo cierta seguridad de nivelación.</p>
+            <div class="alert-box alert-warning" style="margin-top: var(--space-md);">
+              ⚠️ <strong>Para:</strong> Pilotos con experiencia en Angle Mode que comienzan con acrobacias básicas.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger" id="acc-acro">
+            <span>🔴 Modo Acrobático (Acro)</span>
+            <div class="accordion-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </div>
+          </button>
+          <div class="accordion-content">
+            <p>El comportamiento de auto-nivelación se <strong>desactiva por completo</strong>. El piloto controla
+              directamente la <em>velocidad de rotación angular</em> en grados por segundo en los tres ejes espaciales.
+            </p>
+            <p>Si el piloto inclina el dron hacia adelante y suelta el mando, la aeronave mantendrá ese ángulo
+              indefinidamente hasta que reciba un comando opuesto. Requiere correcciones constantes y alto nivel de
+              memoria muscular.</p>
+            <div class="alert-box alert-danger" style="margin-top: var(--space-md);">
+              🔴 <strong>Nivel avanzado:</strong> Requiere horas de práctica en simulador antes de volar un dron real en
+              este modo.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN 4: ANATOMÍA DEL DRON -->
+  <section class="section" id="anatomia" style="background: var(--bg-tertiary);">
+    <div class="container">
+      <div class="reveal" style="margin-bottom: var(--space-2xl);">
+        <p class="section-label">Sección 4</p>
+        <h2 class="heading-xl" style="margin-bottom: var(--space-md);">Anatomía del Dron FPV</h2>
+        <p class="body-lg" style="max-width: 700px;">Cada componente cumple una función específica dentro del balance de
+          fuerzas mecánicas y flujo de energía eléctrica.</p>
+      </div>
+
+      <!-- Imagen del chasis / esquema -->
+      <div class="img-frame reveal" style="margin-bottom: var(--space-xl);">
+        <img src="assets/images/manta-chasis-esquema.webp" alt="Esquema del chasis Manta 3.6"
+          onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'><div class=\'img-placeholder-icon\'>🏗️</div><p>Esquema del chasis AxisFlying Manta 3.6&quot; con componentes marcados</p><code>assets/images/manta-chasis-esquema.jpg</code></div><div class=\'img-caption\'>Esquema de distribución de componentes en el Manta 3.6&quot;</div>'">
+        <div class="img-caption">Distribución de componentes en el chasis AxisFlying Manta 3.6"</div>
+      </div>
+
+      <div class="card reveal">
+        <div class="card-header">
+          <div class="card-icon">🔩</div>
+          <h3>Componentes y Funciones</h3>
+        </div>
+        <div class="card-body" style="padding: 0;">
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Componente</th>
+                  <th>Función Técnica</th>
+                  <th>Principio</th>
+                  <th>Ubicación</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Controlador de Vuelo (FC)</strong></td>
+                  <td>Procesamiento de señales y algoritmos PID</td>
+                  <td>MCU en tiempo real + IMU/Giroscopio</td>
+                  <td>Centro geométrico sobre amortiguadores</td>
+                </tr>
+                <tr>
+                  <td><strong>Variador (ESC)</strong></td>
+                  <td>Regulación de velocidad y potencia trifásica</td>
+                  <td>PWM de alta frecuencia en MOSFETs</td>
+                  <td>Base del stack debajo de la FC</td>
+                </tr>
+                <tr>
+                  <td><strong>Motores Brushless</strong></td>
+                  <td>Generación de empuje rotacional</td>
+                  <td>Inducción electromagnética con imanes de neodimio</td>
+                  <td>Extremos distales de los brazos</td>
+                </tr>
+                <tr>
+                  <td><strong>Hélices</strong></td>
+                  <td>Conversión de rotación en sustentación</td>
+                  <td>Principio de Bernoulli y 3ra Ley de Newton</td>
+                  <td>Montadas sobre los ejes de los motores</td>
+                </tr>
+                <tr>
+                  <td><strong>Receptor de Radio (RX)</strong></td>
+                  <td>Recepción de comandos inalámbricos</td>
+                  <td>Desmodulación RF en 2.4 GHz, protocolo CRSF</td>
+                  <td>Parte trasera, antenas alejadas del carbono</td>
+                </tr>
+                <tr>
+                  <td><strong>Transmisor Video (VTX)</strong></td>
+                  <td>Transmisión de imagen en tiempo real</td>
+                  <td>Modulación FM analógica en 5.8 GHz</td>
+                  <td>Parte trasera, requiere buena ventilación</td>
+                </tr>
+                <tr>
+                  <td><strong>Cámara FPV</strong></td>
+                  <td>Captura visual frontal</td>
+                  <td>Sensor CMOS rápido con WDR</td>
+                  <td>Sección frontal en soporte basculante</td>
+                </tr>
+                <tr>
+                  <td><strong>Condensador Electrolítico</strong></td>
+                  <td>Supresión de picos de voltaje</td>
+                  <td>Almacenamiento capacitivo de respuesta rápida</td>
+                  <td>Soldado en los pads de batería del ESC</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Imágenes de los componentes principales -->
+      <div class="reveal" style="margin-top: var(--space-xl);">
+        <h3 class="heading-md" style="margin-bottom: var(--space-lg);">Imágenes de Referencia</h3>
+        <div class="img-grid">
+          <div class="img-frame">
+            <img src="assets/images/stack-argus-f7.jpg" alt="Stack Argus Mini F7"
+              onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'><div class=\'img-placeholder-icon\'>💻</div><p>Stack Argus Mini F7 — FC + ESC</p><code>assets/images/stack-argus-f7.jpg</code></div>'">
+            <div class="img-caption">Stack Argus Mini F7 (FC + ESC 55A)</div>
+          </div>
+          <div class="img-frame">
+            <img src="assets/images/motor-c206.jpg" alt="Motor AxisFlying C206"
+              onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'><div class=\'img-placeholder-icon\'>⚙️</div><p>Motor AxisFlying C206 2750KV</p><code>assets/images/motor-c206.jpg</code></div>'">
+            <div class="img-caption">Motor AxisFlying C206 2750KV</div>
+          </div>
+          <div class="img-frame">
+            <img src="assets/images/receptor-superd.jpg" alt="Receptor BetaFPV SuperD ELRS"
+              onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'><div class=\'img-placeholder-icon\'>📡</div><p>Receptor BetaFPV SuperD ELRS 2.4G</p><code>assets/images/receptor-superd.jpg</code></div>'">
+            <div class="img-caption">Receptor BetaFPV SuperD ELRS 2.4GHz</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN 5: COMUNICACIONES -->
+  <section class="section" id="comunicaciones">
+    <div class="container">
+      <div class="reveal" style="margin-bottom: var(--space-2xl);">
+        <p class="section-label">Sección 5</p>
+        <h2 class="heading-xl" style="margin-bottom: var(--space-md);">Radio y Transmisión de Video</h2>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: var(--space-xl);">
+        <div class="card reveal">
+          <div class="card-header">
+            <div class="card-icon">📡</div>
+            <h3>ExpressLRS (ELRS) — Control</h3>
+          </div>
+          <div class="card-body">
+            <p><strong>ExpressLRS</strong> es el protocolo de radiocontrol predominante en la industria. Es de código
+              abierto y opera principalmente en la banda de <strong>2.4 GHz</strong>.</p>
+            <ul>
+              <li><strong>Latencia ultra baja</strong>: hasta 1000 paquetes por segundo</li>
+              <li><strong>Alta resiliencia</strong>: modulación FHSS para evitar interferencias</li>
+              <li><strong>Alcance kilométrico</strong> con alta sensibilidad de recepción</li>
+              <li>Protocolo de comunicación <strong>CRSF</strong> a 115200 baud hacia la FC</li>
+            </ul>
+            <div class="alert-box alert-info" style="margin-top: var(--space-md);">
+              ⚠️ Los receptores ELRS V3 y emisoras con firmware ELRS V2 son incompatibles. Se requiere actualizar el
+              firmware de la LiteRadio 2 SE a V3.
+            </div>
+          </div>
+        </div>
+
+        <div class="card reveal reveal-delay-1">
+          <div class="card-header">
+            <div class="card-icon">📺</div>
+            <h3>Transmisión de Video</h3>
+          </div>
+          <div class="card-body">
+            <p>Existen dos tecnologías para enviar la imagen desde el dron a las gafas:</p>
+            <h4 style="margin: var(--space-md) 0 var(--space-sm); font-family: var(--font-heading);">📟 Analógico (5.8
+              GHz)</h4>
+            <ul>
+              <li>Latencia prácticamente nula (&lt; 15 ms)</li>
+              <li>Señal propensa a interferencias estáticas</li>
+              <li>Calidad de imagen SD</li>
+              <li>Costo muy accesible</li>
+            </ul>
+            <h4 style="margin: var(--space-md) 0 var(--space-sm); font-family: var(--font-heading);">🖥️ Digital (HD)
+            </h4>
+            <ul>
+              <li>Imagen en HD (720p o 1080p)</li>
+              <li>Latencia variable 20–40 ms</li>
+              <li>Compresión H.264 / H.265</li>
+              <li>Costo significativamente mayor</li>
+            </ul>
+            <p style="margin-top: var(--space-md);">El Manta 3.6" del taller usa sistema <span
+                class="badge badge-orange">Analógico</span> (VTX Rush Tank Mini).</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN 6: BATERÍAS -->
+  <section class="section" id="baterias" style="background: var(--bg-tertiary);">
+    <div class="container">
+      <div class="reveal" style="margin-bottom: var(--space-2xl);">
+        <p class="section-label">Sección 6</p>
+        <h2 class="heading-xl" style="margin-bottom: var(--space-md);">Baterías y Almacenamiento de Energía</h2>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-xl);">
+        <div class="card reveal">
+          <div class="card-header">
+            <div class="card-icon">🔋</div>
+            <h3>LiPo — Polímero de Litio</h3>
+          </div>
+          <div class="card-body">
+            <ul>
+              <li>Voltaje nominal: <strong>3.7V por celda</strong></li>
+              <li>Carga máxima segura: <strong>4.2V por celda</strong></li>
+              <li>Alta densidad de corriente</li>
+              <li>Tasas de descarga medidas en factor C</li>
+              <li>Para el Manta 6S: <strong>22.2V nominal / 25.2V cargado</strong></li>
+            </ul>
+          </div>
+        </div>
+        <div class="card reveal reveal-delay-1">
+          <div class="card-header">
+            <div class="card-icon">⚡</div>
+            <h3>LiHV — Alto Voltaje</h3>
+          </div>
+          <div class="card-body">
+            <ul>
+              <li>Carga de hasta <strong>4.35V por celda</strong></li>
+              <li>Mayor empuje motor al inicio del vuelo</li>
+              <li>Mayor eficiencia energética</li>
+              <li>Menor vida útil si no se almacenan correctamente</li>
+              <li>Voltaje de almacenamiento: <strong>3.8V – 3.85V por celda</strong></li>
+            </ul>
+          </div>
+        </div>
+        <div class="card reveal reveal-delay-2">
+          <div class="card-header">
+            <div class="card-icon">⚠️</div>
+            <h3>Seguridad con Baterías</h3>
+          </div>
+          <div class="card-body">
+            <div class="alert-box alert-danger">
+              <strong>⚠️ CRÍTICO:</strong> Nunca sobre-cargar ni sobre-descargar una batería LiPo. Puede hincharse,
+              derretirse o incendiarse.
+            </div>
+            <ul>
+              <li>Almacenar a <strong>3.80V por celda</strong></li>
+              <li>No conectar batería invertida</li>
+              <li>Cargar solo con cargador específico</li>
+              <li>Desechar baterías hinchadas</li>
+              <li>Nunca dejar cargando sin supervisión</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Imagen batería -->
+      <div class="img-frame reveal" style="margin-top: var(--space-xl);">
+        <img src="assets/images/bateria-lipo-6s.jpg" alt="Batería LiPo 6S"
+          onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'><div class=\'img-placeholder-icon\'>🔋</div><p>Batería LiPo 6S con conector XT60</p><code>assets/images/bateria-lipo-6s.jpg</code></div>'">
+        <div class="img-caption">Batería LiPo 6S con conector XT60 — la fuente de energía del Manta 3.6"</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN 7: NORMATIVA -->
+  <section class="section" id="normativa">
+    <div class="container">
+      <div class="reveal" style="margin-bottom: var(--space-2xl);">
+        <p class="section-label">Sección 7 — Obligatorio</p>
+        <h2 class="heading-xl" style="margin-bottom: var(--space-md);">Normativa DGAC Chile</h2>
+        <p class="body-lg" style="max-width: 700px;">La operación de drones en Chile está estrictamente regulada por la
+          Dirección General de Aeronáutica Civil (DGAC).</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: var(--space-xl);">
+        <div class="card reveal">
+          <div class="card-header">
+            <div class="card-icon">⚖️</div>
+            <h3>DAN 91 — Áreas No Pobladas</h3>
+          </div>
+          <div class="card-body">
+            <p>Se aplica para operaciones fuera de zonas urbanas: campos abiertos, cerros, áreas rurales despobladas.
+            </p>
+            <h4 style="margin: var(--space-md) 0 var(--space-sm); font-family: var(--font-heading);">Requisitos
+              principales:</h4>
+            <ul>
+              <li><strong>VLOS</strong>: El piloto debe mantener contacto visual directo con la aeronave en todo momento
+              </li>
+              <li><strong>Techo máximo</strong>: 400 pies (≈120 metros) sobre el terreno</li>
+              <li>Responsabilidad civil por daños causados</li>
+              <li>No está permitido pilotar solo con las gafas FPV sin observador de apoyo</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card reveal reveal-delay-1" style="border: 2px solid var(--accent);">
+          <div class="card-header" style="background: linear-gradient(90deg, var(--accent-soft), var(--bg-secondary));">
+            <div class="card-icon" style="background: var(--accent); color: white;">⚠️</div>
+            <h3>DAN 151 — Áreas Pobladas</h3>
+          </div>
+          <div class="card-body">
+            <p>Aplica si se vuela en <strong>patio del colegio, parques urbanos, zonas residenciales</strong> o calles.
+            </p>
+            <div class="steps-list" style="margin-top: var(--space-md);">
+              <div class="step-item">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                  <h4>Registro de la Aeronave</h4>
+                  <p>Inscribir el dron ante el registro DGAC. Se asigna número de matrícula.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                  <h4>Credencial de Piloto</h4>
+                  <p>Mayor de 18 años, declaración jurada, examen DGAC con nota ≥ 75%.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                  <h4>Seguro de Responsabilidad Civil</h4>
+                  <p>Póliza vigente que cubra daños a terceros en caso de accidente.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                  <h4>Restricciones de Distancia</h4>
+                  <p>Mínimo 30 metros de personas ajenas a la operación. No sobrevolar propiedades privadas sin
+                    consentimiento.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card reveal" style="margin-top: var(--space-xl);">
+        <div class="card-header">
+          <div class="card-icon">🏫</div>
+          <h3>Recomendaciones para el Taller Escolar</h3>
+        </div>
+        <div class="card-body">
+          <div class="alert-box alert-danger">
+            <strong>🚨 NUNCA instales las hélices</strong> mientras el dron esté conectado a la PC por USB o en pruebas
+            estáticas. Un giro inesperado puede causar cortes graves.
+          </div>
+          <div class="alert-box alert-warning" style="margin-top: var(--space-md);">
+            <strong>⚠️ Fibra de carbono conduce electricidad.</strong> Asegúrate de que ningún cable expuesto toque el
+            chasis.
+          </div>
+          <div class="alert-box alert-info" style="margin-top: var(--space-md);">
+            <strong>💡 VTX en Pitmode:</strong> Durante pruebas en el banco de trabajo, mantener el transmisor de video
+            en modo de baja potencia (0.1 mW) para evitar sobrecalentamiento.
+          </div>
+          <div class="alert-box alert-success" style="margin-top: var(--space-md);">
+            <strong>✅ Vuelos de interiores:</strong> La DAN 151 exige redes perimetrales de protección en vuelos
+            interiores de demostración.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NAVEGACIÓN AL SIGUIENTE MÓDULO -->
+  <section class="section" style="background: var(--bg-tertiary);">
+    <div class="container text-center">
+      <div class="reveal">
+        <p class="section-label">¿Listo para el siguiente paso?</p>
+        <h2 class="heading-xl" style="margin-bottom: var(--space-md);">Ahora: Arma tu Dron</h2>
+        <p class="body-lg" style="max-width: 600px; margin: 0 auto var(--space-xl);">
+          Con la teoría dominada, avanza al módulo de armado y configuración del Manta 3.6".
+        </p>
+        <a href="modulo-armado.html" class="btn btn-primary btn-lg btn-shimmer ripple">
+          Ir al Módulo de Armado
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-icon">🚁</div>
+        <div class="footer-brand">Liceo Bicentenario de Excelencia Polivalente San Nicolás</div>
+        <div class="footer-info">
+          Especialidad de Operaciones de Drones<br>
+          Módulo Teórico — Dron FPV Manta 3.6"<br>
+          <strong>Ing. Christopher Ruiz</strong>
+        </div>
+        <div class="footer-credit">Material educativo para uso institucional.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/theme.js"></script>
+  <script src="assets/js/utils.js"></script>
+</body>
+
+</html>

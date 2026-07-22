@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo Armado y Configuración — Manta 3.6" | Dron FPV</title>
+  <meta name="description"
+    content="Guía completa paso a paso del armado físico, conexionado eléctrico y configuración en software del dron FPV AxisFlying Manta 3.6 pulgadas.">
+  <link rel="icon" type="image/webp" href="assets/images/logo-liceo.webp">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <style>
+    /* Estilos adicionales para el diagrama de conexiones */
+    .wiring-diagram {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      margin: var(--space-lg) 0;
+      font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+      font-size: 0.78rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      overflow-x: auto;
+    }
+
+    [data-theme="dark"] .wiring-diagram {
+      background: #050a12;
+      border-color: rgba(251, 146, 60, 0.2);
+      color: #7dd3fc;
+    }
+
+    .wiring-diagram .w-title {
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+    }
+
+    .wiring-diagram .w-component {
+      color: var(--text-primary);
+      font-weight: 700;
+    }
+
+    [data-theme="dark"] .wiring-diagram .w-component {
+      color: #f8fafc;
+    }
+
+    .wiring-diagram .w-signal {
+      color: #22c55e;
+    }
+
+    [data-theme="dark"] .wiring-diagram .w-signal {
+      color: #4ade80;
+    }
+
+    .stack-diagram {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      max-width: 420px;
+      margin: var(--space-lg) auto;
+    }
+
+    .stack-layer {
+      width: 100%;
+      padding: var(--space-md) var(--space-lg);
+      border: 1px solid var(--border);
+      text-align: center;
+      font-weight: 600;
+      transition: all var(--transition-base);
+      cursor: default;
+      position: relative;
+    }
+
+    .stack-layer:first-child {
+      border-radius: var(--radius-md) var(--radius-md) 0 0;
+    }
+
+    .stack-layer:last-child {
+      border-radius: 0 0 var(--radius-md) var(--radius-md);
+    }
+
+    .stack-layer:hover {
+      transform: scaleX(1.02);
+      z-index: 2;
+      box-shadow: var(--shadow-md);
+    }
+
+    .stack-layer.fc {
+      background: linear-gradient(90deg, var(--accent-soft), var(--bg-secondary));
+      color: var(--accent-dark);
+      border-color: var(--accent);
+    }
+
+    .stack-layer.damper {
+      background: var(--bg-tertiary);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 400;
+      font-style: italic;
+    }
+
+    .stack-layer.esc {
+      background: linear-gradient(90deg, var(--info-soft), var(--bg-secondary));
+      color: var(--info);
+      border-color: var(--info);
+    }
+
+    .stack-layer.base {
+      background: var(--bg-secondary);
+      color: var(--text-secondary);
+    }
+
+    .stack-arrow {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      padding: 2px 0;
+    }
+
+    .config-table-wrap {
+      overflow-x: auto;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      margin: var(--space-md) 0;
+    }
+
+    .config-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    .config-table th {
+      background: var(--bg-tertiary);
+      padding: var(--space-md);
+      text-align: left;
+      font-weight: 700;
+      border-bottom: 2px solid var(--accent);
+      white-space: nowrap;
+      font-family: var(--font-heading);
+    }
+
+    .config-table td {
+      padding: var(--space-md);
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+
+    .config-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .config-table tr:hover td {
+      background: var(--accent-soft);
+    }
+
+    .config-table code {
+      background: var(--bg-tertiary);
+      padding: 0.2rem 0.5rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      color: var(--accent-dark);
+      font-family: 'SF Mono', monospace;
+      font-weight: 600;
+    }
+
+    .warning-box {
+      display: flex;
+      gap: var(--space-md);
+      align-items: flex-start;
+      padding: var(--space-lg);
+      border-radius: var(--radius-md);
+      margin: var(--space-md) 0;
+    }
+
+    .warning-box.red {
+      background: var(--danger-soft);
+      border-left: 4px solid var(--danger);
+    }
+
+    .warning-box.yellow {
+      background: var(--warning-soft);
+      border-left: 4px solid var(--warning);
+    }
+
+    .warning-box.green {
+      background: var(--success-soft);
+      border-left: 4px solid var(--success);
+    }
+
+    .warning-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .step-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: all var(--transition-base);
+    }
+
+    .step-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--accent);
+    }
+
+    .step-card-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-lg);
+      padding: var(--space-lg) var(--space-xl);
+      background: linear-gradient(90deg, var(--accent-soft), var(--bg-secondary));
+      border-bottom: 1px solid var(--border);
+    }
+
+    .step-card-num {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-dark), var(--accent));
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.2rem;
+      font-family: var(--font-heading);
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+    }
+
+    .step-card-header h3 {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .step-card-body {
+      padding: var(--space-xl);
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+
+    .step-card-body ul {
+      margin: var(--space-md) 0 var(--space-md) var(--space-lg);
+    }
+
+    .step-card-body li {
+      margin-bottom: var(--space-sm);
+      padding-left: var(--space-sm);
+    }
+
+    .step-card-body li::marker {
+      color: var(--accent);
+    }
+
+    .step-card-body strong {
+      color: var(--accent-dark);
+    }
+
+    .bind-method {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin: var(--space-md) 0;
+    }
+
+    .bind-method-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-lg) var(--space-xl);
+      background: var(--bg-tertiary);
+      font-weight: 700;
+      font-family: var(--font-heading);
+      color: var(--text-primary);
+    }
+
+    .bind-method-body {
+      padding: var(--space-xl);
+    }
+
+    .bind-step {
+      display: flex;
+      gap: var(--space-md);
+      margin-bottom: var(--space-md);
+      align-items: flex-start;
+    }
+
+    .bind-step-num {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--accent-soft);
+      border: 2px solid var(--accent);
+      color: var(--accent-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" role="navigation" aria-label="Navegación principal">
+    <div class="navbar-inner">
+      <a href="index.html" class="navbar-brand">
+        <img src="assets/images/logo-liceo.webp" alt="Logo Liceo Bicentenario San Nicolás" width="44" height="44">
+        <div class="brand-text">
+          <span class="brand-name">Liceo Bicentenario — Operaciones de Drones</span>
+          <span class="brand-sub">Dron FPV Manta 3.6"</span>
+        </div>
+      </a>
+      <div class="navbar-nav" id="main-nav">
+        <a href="index.html" class="nav-link">Inicio</a>
+        <a href="modulo-teorico.html" class="nav-link">Módulo Teórico</a>
+        <a href="modulo-armado.html" class="nav-link active">Armado y Config.</a>
+      </div>
+      <div class="navbar-actions">
+        <button class="theme-toggle" aria-label="Cambiar tema">
+          <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5" />
+            <line x1="12" y1="1" x2="12" y2="3" />
+            <line x1="12" y1="21" x2="12" y2="23" />
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+            <line x1="1" y1="12" x2="3" y2="12" />
+            <line x1="21" y1="12" x2="23" y2="12" />
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+          </svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" style="display:none">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+          </svg>
+        </button>
+        <button class="mobile-menu-btn" aria-label="Abrir menú" aria-expanded="false" aria-controls="main-nav">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO DEL MÓDULO -->
+  <section class="hero" id="inicio" style="min-height: 50vh;">
+    <div class="hero-bg" style="background-image: url('assets/images/hero-armado.webp');"></div>
+    <div class="hero-particles"></div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <div class="hero-badge-dot"></div>
+        Módulo 2 — Armado y Configuración
+      </div>
+      <h1 class="hero-title display">
+        <span class="accent">Manta 3.6"</span><br>Armado y Config.
+      </h1>
+      <p class="hero-subtitle body-lg text-muted">
+        Guía paso a paso del ensamblaje físico, soldadura y configuración en software del dron del taller.
+      </p>
+      <div class="hero-actions" style="margin-top: var(--space-xl);">
+        <a href="#lista-materiales" class="btn btn-primary btn-shimmer ripple">
+          Comenzar el armado
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 5v14M5 12l7 7 7-7" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ADVERTENCIA DE SEGURIDAD -->
+  <section class="section-sm" style="background: var(--danger-soft); border-bottom: 2px solid var(--danger);">
+    <div class="container">
+      <div class="warning-box red" style="max-width: 800px; margin: 0 auto; border: none; background: transparent;">
+        <div class="warning-icon">🚨</div>
+        <div>
+          <strong style="font-size: 1.1rem; color: var(--danger);">Advertencias de Seguridad — Leer ANTES de
+            comenzar</strong>
+          <ul style="margin-top: var(--space-sm); color: var(--text-secondary);">
+            <li><strong>NUNCA</strong> instales las hélices mientras realizas pruebas de configuración o el dron esté
+              conectado a la PC.</li>
+            <li>La fibra de carbono <strong>conduce electricidad</strong>. Un cortocircuito destruirá el stack al
+              instante.</li>
+            <li>Usa <strong>fijador de roscas (Loctite 242)</strong> en todos los pernos metálicos para evitar el
+              aflojamiento por vibración.</li>
+            <li>El VTX se calienta mucho. Mantenlo en <strong>Pitmode (0.1 mW)</strong> durante pruebas estáticas.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LISTA DE MATERIALES -->
+  <section class="section" id="lista-materiales">
+    <div class="container">
+      <div class="reveal" style="margin-bottom: var(--space-2xl);">
+        <p class="section-label">Antes de Comenzar</p>
+        <h2 class="heading-xl" style="margin-bottom: var(--space-md);">Lista de Materiales</h2>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: var(--space-xl);">
+        <div class="card reveal">
+          <div class="card-header">
+            <div class="card-icon">🏗️</div>
+            <h3>Componentes del Dron</h3>
+          </div>
+          <div class="card-body">
+            <ul>
+              <li>Chasis <strong>AxisFlying Manta 3.6" Lite</strong> (fibra de carbono T700)</li>
+              <li>4x Motores <strong>AxisFlying C206 2750KV</strong></li>
+              <li>Stack <strong>Argus Mini F7 + ESC 55A AM32</strong></li>
+              <li>Receptor <strong>BetaFPV SuperD ELRS 2.4G</strong></li>
+              <li>Cámara <strong>Caddx FPV</strong></li>
+              <li>Transmisor de video <strong>Rush Tank Ultimate Mini</strong></li>
+              <li>Módulo <strong>GPS</strong> (opcional)</li>
+              <li>Condensador electrolítico <strong>1000µF / 35V</strong></li>
+              <li>Zumbador / Beeper</li>
+              <li>Batería LiPo <strong>6S XT60</strong></li>
+            </ul>
+          </div>
+        </div>
+        <div class="card reveal reveal-delay-1">
+          <div class="card-header">
+            <div class="card-icon">🛠️</div>
+            <h3>Herramientas necesarias</h3>
+          </div>
+          <div class="card-body">
+            <ul>
+              <li>Estación de soldadura (mínimo <strong>60W</strong>) con punta fina</li>
+              <li>Estaño de alta calidad + fundente en pasta</li>
+              <li>Destornillador <strong>M2 y M3</strong> hexagonal</li>
+              <li>Fijador de roscas <strong>Loctite 242</strong> (azul, fuerza media)</li>
+              <li>Alicates y pinzas</li>
+              <li>Funda termorretráctil de distintos diámetros</li>
+              <li>Pistola de calor o encendedor</li>
+              <li>Multímetro</li>
+              <li>Lija al agua grano 600</li>
+              <li>Cable USB-C para configuración</li>
+            </ul>
+          </div>
+        </div>
+        <div class="card reveal reveal-delay-2">
+          <div class="card-header">
+            <div class="card-icon">💻</div>
+            <h3>Software necesario</h3>
+          </div>
+          <div class="card-body">
+            <ul>
+              <li><strong>Betaflight Configurator</strong> — Configuración de la FC</li>
+              <li><strong>ExpressLRS Configurator</strong> — Flasheo del receptor</li>
+              <li><strong>AM32 ESC Configurator</strong> — Calibración del variador (web)</li>
+              <li><strong>BETAFPV Configurator V2.0.0-RC2</strong> — Actualización de la emisora LiteRadio 2 SE</li>
+            </ul>
+            <div class="alert-box alert-info" style="margin-top: var(--space-md);">
+              💡 Todos son <strong>gratuitos</strong>. Descarga Betaflight Configurator desde GitHub.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIAGRAMA DE CONEXIONES -->
+  <section class="section" id="diagrama" style="background: var(--bg-tertiary);">
+    <div class="container">
+      <div class="reveal" style="margin-bottom: var(--space-2xl);">
+        <p class="section-label">Referencia Eléctrica</p>
+        <h2 class="heading-xl" style="margin-bottom: var(--space-md);">Diagrama de Conexiones</h2>
+        <p class="body-lg" style="max-width: 700px;">Vista general del flujo de señales y alimentación eléctrica entre
+          componentes del Manta 3.6".</p>
+      </div>
+
+      <!-- Imagen del diagrama real o del PCB -->
+      <div class="img-frame reveal" style="margin-top: var(--space-lg);">
+        <img src="assets/images/wiring-diagram-manta.webp" alt="Diagrama de conexiones del Manta 3.6" class="img-zoomable" style="width: 100%; height: auto; display: block; object-fit: cover;" onerror="this.onerror=null; this.src='assets/images/wiring-diagram-manta.jpg';">
+        <div class="img-caption">Diagrama de conexiones eléctrico — Vista detallada del Stack Argus Mini F7 (Haz clic para ver en pantalla completa)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PASOS DE ARMADO FÍSICO -->
+  <section class="section" id="armado-fisico">
+    <div class="container">
+      <div class="reveal" style="margin-bottom: var(--space-2xl);">
+        <p class="section-label">Parte 1 de 2</p>
+        <h2 class="heading-xl" style="margin-bottom: var(--space-md);">Armado Físico</h2>
+        <p class="body-lg" style="max-width: 700px;">El montaje físico debe ejecutarse con precisión rigurosa,
+          respetando los estándares de conductividad y aislamiento eléctrico.</p>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: var(--space-xl);">
+
+        <!-- Paso 1: Chasis -->
+        <div class="step-card reveal">
+          <div class="step-card-header">
+            <div class="step-card-num">1</div>
+            <h3>Preparación del Chasis Manta 3.6" Lite</h3>
+          </div>
+          <div class="step-card-body">
+            <p>El chasis está construido con <strong>fibra de carbono T700 de grado aeronáutico</strong>, lo que le
+              confiere resistencia superior ante impactos dinámicos.</p>
+            <ul>
+              <li>Realizar el <strong>lijado fino</strong> de los bordes biselados de los brazos de carbono de 4 mm
+                usando lija al agua grano 600. Esto elimina microastillas conductoras que podrían causar cortocircuitos.
+              </li>
+              <li>Montar los cuatro brazos de 4 mm sobre la <strong>placa inferior de 3 mm</strong> empleando pernos M3
+                de cabeza avellanada.</li>
+              <li>Colocar la placa de presión intermedia y apretar los pernos con <strong>Loctite 242</strong> en todas
+                las uniones metal-metal.</li>
+              <li>Instalar los <strong>separadores hexagonales de aluminio de 20 mm</strong> para definir el espacio
+                útil de la electrónica.</li>
+            </ul>
+
+            <!-- Imagen del chasis -->
+            <div class="img-grid" style="margin-top: var(--space-lg);">
+              <div class="img-frame">
+                <img src="assets/images/chasis-manta-partes.webp" alt="Partes del chasis Manta 3.6"
+                  onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'><div class=\'img-placeholder-icon\'>🏗️</div><p>Partes del chasis AxisFlying Manta 3.6&quot;</p><code>assets/images/chasis-manta-partes.jpg</code></div>'">
+                <div class="img-caption">Partes del chasis Manta 3.6" antes del ensamblaje</div>
+              </div>
+              <div class="img-frame">
+                <img src="assets/images/chasis-manta-armado.webp" alt="Chasis Manta armado"
+                  onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'><div class=\'img-placeholder-icon\'>🏗️</div><p>Chasis Manta 3.6&quot; ensamblado — vista superior</p><code>assets/images/chasis-manta-armado.jpg</code></div>'">
+                <div class="img-caption">Chasis armado con separadores instalados</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Paso 2: Motores -->
+        <div class="step-card reveal">
+          <div class="step-card-header">
+            <div class="step-card-num">2</div>
+            <h3>Instalación de Motores AxisFlying C206 2750KV</h3>
+          </div>
+          <div class="step-card-body">
+            <p>Los motores C206 2750KV están optimizados para baterías de <strong>6S y hélices de 3.6 pulgadas</strong>.
+              Patrón de anclaje 9×9 mm con roscas M2.</p>
+
+            <div class="warning-box red">
+              <div class="warning-icon">🔴</div>
+              <div>
+                <strong>CRÍTICO:</strong> Verificar que la punta de los pernos de montaje <strong>NO exceda el grosor
+                  del brazo + base del motor</strong>. Un perno excesivamente largo penetrará las bobinas de cobre del
+                motor y provocará un cortocircuito que destruirá el ESC al energizar el sistema.
+              </div>
+            </div>
+
+            <ul>
+              <li>Posicionar cada motor sobre el extremo del brazo correspondiente.</li>
+              <li>Insertar los pernos M2. Verificar longitud con calibrador.</li>
+              <li>Llevar los cables de fase planos sobre el brazo.</li>
+              <li>Proteger los cables con <strong>funda termorretráctil</strong> o cinta de alta fricción para prevenir
+                cortes por las hélices.</li>
+            </ul>
+
+            <!-- Imagen motores -->
+            <div class="img-grid" style="margin-top: var(--space-lg);">
+              <div class="img-frame">
+                <img src="assets/images/motor-c206-instalacion.jpg" alt="Instalación del motor C206"
+                  onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'><div class=\'img-placeholder-icon\'>⚙️</div><p>Instalación del motor C206 en el brazo del chasis</p><code>assets/images/motor-c206-instalacion.jpg</code></div>'">
+                <div class="img-caption">Motor C206 instalado en brazo de carbono</div>
+              </div>
+              <div class="img-frame">
+                <img src="assets/images/motor-pernos-longitud.jpg" alt="Verificación de longitud de pernos"
+                  onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'><div class=\'img-placeholder-icon\'>📏</div><p>Verificación de longitud de pernos del motor</p><code>assets/images/motor-pernos-longitud.jpg</code></div>'">
+                <div class="img-caption">Verificación crítica: longitud de pernos vs. grosor del brazo</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Paso 3: Stack -->
+        <div class="step-card reveal">
+          <div class="step-card-header">
+            <div class="step-card-num">3</div>
+            <h3>Montaje e Integración del Stack Argus Mini F7</h3>
+          </div>
+          <div class="step-card-body">
+            <p>El Stack Argus Mini presenta una configuración compacta de <strong>20×20 mm</strong>. El orden de montaje
+              de abajo hacia arriba es:</p>
+
+            <!-- Diagrama visual del stack -->
+            <div class="stack-diagram">
+              <div class="stack-layer base">📌 Tuerca de seguridad M2/M3</div>
+              <div class="stack-arrow">▲</div>
+              <div class="stack-layer fc">💻 FC Argus Mini F7 — Controladora de Vuelo</div>
+              <div class="stack-arrow">│ Arnés de datos SH1.0 8P</div>
+              <div class="stack-layer damper">〰️ Dampers de Silicona (amortiguación)</div>
+              <div class="stack-arrow">│</div>
+              <div class="stack-layer damper">─────── Separador de Nylon 5–6 mm ───────</div>
+              <div class="stack-arrow">│</div>
+              <div class="stack-layer esc">⚡ ESC Argus 55A AM32 — Variador</div>
+              <div class="stack-arrow">│</div>
+              <div class="stack-layer damper">〰️ Dampers / Separador base</div>
+              <div class="stack-arrow">▼</div>
+              <div class="stack-layer base">🏗️ Placa Inferior de Carbono — Chasis Manta 3.6"</div>
+              <div class="stack-arrow">▼</div>
+              <div class="stack-layer base">📌 Perno de Montaje M2/M3</div>
+            </div>
+
+            <h4
+              style="margin: var(--space-lg) 0 var(--space-md); font-family: var(--font-heading); font-size: 1.05rem;">
+              Soldadura de Cables de Fase de Motores</h4>
+            <ul>
+              <li>Recortar los cables de los motores a la <strong>longitud exacta</strong> para alcanzar los pads del
+                ESC.</li>
+              <li>Pelar 1.5 mm del aislante, pre-estañar los terminales con fundente.</li>
+              <li>Soldar a los pads marcados como <strong>M1, M2, M3 y M4</strong> del ESC.</li>
+              <li><strong>No alteres</strong> el orden de los cables de fase. El sentido de rotación se configura
+                después por software en AM32.</li>
+            </ul>
+
+            <h4
+              style="margin: var(--space-lg) 0 var(--space-md); font-family: var(--font-heading); font-size: 1.05rem;">
+              Integración del Condensador</h4>
+            <div class="warning-box yellow">
+              <div class="warning-icon">⚡</div>
+              <div>
+                Soldar el condensador electrolítico <strong>(1000µF, 35V) en paralelo</strong> sobre los pads de batería
+                del ESC. Respetar polaridad (franja gris = pin negativo). Mantener las patas al mínimo de longitud.
+              </div>
+            </div>
+
+            <!-- Imagen del stack soldado -->
+            <div class="img-grid" style="margin-top: var(--space-lg);">
+              <div class="img-frame">
+                <img src="assets/images/esc-soldadura-motores.jpg" alt="Soldadura de motores en el ESC"
+                  onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'><div class=\'img-placeholder-icon\'>🔧</div><p>Soldadura de cables de fase de motores en el ESC</p><code>assets/images/esc-soldadura-motores.jpg</code></div>'">
+                <div class="img-caption">Cables de fase de los 4 motores soldados en el ESC</div>
+              </div>
+              <div class="img-frame">
+                <img src="assets/images/condensador-esc.jpg" alt="Condensador soldado en el ESC"
+                  onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'><div class=\'img-placeholder-icon\'>⚡</div><p>Condensador electrolítico soldado en paralelo en los pads de batería del ESC</p><code>assets/images/condensador-esc.jpg</code></div>'">
+                <div class="img-caption">Condensador 1000µF / 35V soldado en los pads de batería</div>
+              </div>
+              <div class="img-frame">
+                <img src="assets/images/stack-montado.jpg" alt="Stack completamente montado"
+                  onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'><div class=\'img-placeholder-icon\'>💻</div><p>Stack FC + ESC completamente montado con arnés de conexión</p><code>assets/images/stack-montado.jpg</code></div>'">
+                <div class="img-caption">Stack Argus Mini F7 completamente ensamblado</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Paso 4: Periféricos -->
+        <div class="step-card reveal">
+          <div class="step-card-header">
+            <div class="step-card-num">4</div>
+            <h3>Soldadura del Sistema Analógico y Periféricos</h3>
+          </div>
+          <div class="step-card-body">
+            <div
+              style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-lg);">
+              <div>
+                <h4 style="font-family: var(--font-heading); margin-bottom: var(--space-sm);">📺 VTX Rush Tank Ultimate
+                  Mini</h4>
+                <ul>
+                  <li>Cable + del VTX → pad <strong>VBAT</strong> de la FC</li>
+                  <li>Cable GND → pad <strong>GND</strong> adyacente</li>
+                  <li>Video Out de la FC → <strong>Video In</strong> del VTX</li>
+                  <li>SmartAudio del VTX → pad <strong>TX1</strong> de la FC</li>
+                </ul>
+              </div>
+              <div>
+                <h4 style="font-family: var(--font-heading); margin-bottom: var(--space-sm);">📷 Cámara Caddx FPV</h4>
+                <ul>
+                  <li>Alimentar desde la salida <strong>5V</strong> del VTX (filtrado óptimo) o BEC de la FC</li>
+                  <li>Video Out de la cámara → pad <strong>VI</strong> de la FC</li>
+                </ul>
+              </div>
+              <div>
+                <h4 style="font-family: var(--font-heading); margin-bottom: var(--space-sm);">📡 Receptor SuperD ELRS
+                  2.4G</h4>
+                <ul>
+                  <li>Pin 5V del receptor → pin <strong>4V5</strong> de la FC (permite encender con USB sin batería)
+                  </li>
+                  <li>GND → tierra</li>
+                  <li>TX del receptor → <strong>RX2</strong> de la FC</li>
+                  <li>RX del receptor → <strong>TX2</strong> de la FC</li>
+                </ul>
+              </div>
+              <div>
+                <h4 style="font-family: var(--font-heading); margin-bottom: var(--space-sm);">🛰️ Módulo GPS (opcional)
+                </h4>
+                <ul>
+                  <li>GND y 5V → pads correspondientes</li>
+                  <li>TX del GPS → <strong>RX3</strong> de la FC</li>
+                  <li>RX del GPS → <strong>TX3</strong> de la FC</li>
+                  <li>SDA/SCL → pads I2C (si tiene magnetómetro)</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Imagen del dron completamente armado -->
+            <div class="img-frame" style="margin-top: var(--space-xl);">
+              <img src="assets/images/manta-armado-completo.jpg" alt="Manta 3.6 completamente armado"
+                onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'><div class=\'img-placeholder-icon\'>🚁</div><p>Dron Manta 3.6&quot; completamente armado con todos los periféricos instalados</p><code>assets/images/manta-armado-completo.jpg</code></div>'">
+              <div class="img-caption">Dron Manta 3.6" completamente armado — vista final antes de la configuración de
+                software</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CONFIGURACIÓN DE SOFTWARE -->
+  <section class="section" id="configuracion-software" style="background: var(--bg-tertiary);">
+    <div class="container">
+      <div class="reveal" style="margin-bottom: var(--space-2xl);">
+        <p class="section-label">Parte 2 de 2</p>
+        <h2 class="heading-xl" style="margin-bottom: var(--space-md);">Configuración en Software</h2>
+        <p class="body-lg" style="max-width: 700px;">Una vez armado físicamente el dron, se realizan los ajustes de
+          firmware y parámetros en Betaflight.</p>
+      </div>
+
+      <!-- Betaflight -->
+      <div class="card reveal" style="margin-bottom: var(--space-xl);">
+        <div class="card-header">
+          <div class="card-icon">💻</div>
+          <h3>Betaflight Configurator — Pestaña Puertos (UART)</h3>
+        </div>
+        <div class="card-body" style="padding: 0;">
+          <div class="config-table-wrap">
+            <table class="config-table">
+              <thead>
+                <tr>
+                  <th>Puerto</th>
+                  <th>Sensor Input</th>
+                  <th>Serial RX</th>
+                  <th>Periféricos</th>
+                  <th>Baudios</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>USB VCP</strong></td>
+                  <td>OFF</td>
+                  <td>OFF</td>
+                  <td>OFF (conexión directa)</td>
+                  <td>Auto</td>
+                </tr>
+                <tr>
+                  <td><strong>UART 1</strong></td>
+                  <td>OFF</td>
+                  <td>OFF</td>
+                  <td><code>VTX (SmartAudio)</code></td>
+                  <td>Auto</td>
+                </tr>
+                <tr style="background: var(--accent-soft);">
+                  <td><strong>UART 2</strong></td>
+                  <td>OFF</td>
+                  <td><code>✅ Habilitado</code></td>
+                  <td>OFF</td>
+                  <td>115200</td>
+                </tr>
+                <tr>
+                  <td><strong>UART 3</strong></td>
+                  <td><code>GPS</code></td>
+                  <td>OFF</td>
+                  <td>OFF</td>
+                  <td>115200</td>
+                </tr>
+                <tr>
+                  <td><strong>UART 4</strong></td>
+                  <td>OFF</td>
+                  <td>OFF</td>
+                  <td><code>ESC Telemetry</code></td>
+                  <td>115200</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Configuración general -->
+      <div class="card reveal" style="margin-bottom: var(--space-xl);">
+        <div class="card-header">
+          <div class="card-icon">⚙️</div>
+          <h3>Betaflight — Pestaña Configuración General</h3>
+        </div>
+        <div class="card-body">
+          <div
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-xl);">
+            <div>
+              <h4 style="font-family: var(--font-heading); margin-bottom: var(--space-md);">Protocolo ESC</h4>
+              <p>Seleccionar <strong>DSHOT300</strong>. Menor frecuencia que DSHOT600 libera ciclos de CPU en el F7,
+                permitiendo el loop PID a <strong>4.00 kHz</strong> de forma constante.</p>
+            </div>
+            <div>
+              <h4 style="font-family: var(--font-heading); margin-bottom: var(--space-md);">DShot Bidireccional</h4>
+              <p>Habilitar para activar retorno de RPM. Configurar polos del motor en <strong>14</strong> (el C206 tiene
+                14 imanes permanentes en su campana exterior).</p>
+            </div>
+            <div>
+              <h4 style="font-family: var(--font-heading); margin-bottom: var(--space-md);">Alineación del Giroscopio
+              </h4>
+              <p>Si el puerto USB queda en el lateral izquierdo, configurar rotación virtual <strong>Yaw: 90°</strong>.
+                Verificar que el modelo 3D en Betaflight se mueva igual que el dron real.</p>
+            </div>
+            <div>
+              <h4 style="font-family: var(--font-heading); margin-bottom: var(--space-md);">Receptor</h4>
+              <p>Modo: <strong>Serial (via UART)</strong>. Proveedor: <strong>CRSF</strong>. Mapa de canales:
+                <strong>AETR1234</strong>.
+              </p>
+            </div>
+          </div>
+
+          <div class="warning-box green" style="margin-top: var(--space-xl);">
+            <div class="warning-icon">✅</div>
+            <div>
+              <strong>Sensor de corriente:</strong> En la pestaña de Batería, establecer la escala del amperímetro en
+              <strong>200</strong> para el ESC Argus Mini de 55A.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Imagen Betaflight -->
+      <div class="img-frame reveal">
+        <img src="assets/images/betaflight-ports.webp" alt="Betaflight pestaña puertos"
+          onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'><div class=\'img-placeholder-icon\'>💻</div><p>Captura de pantalla de Betaflight Configurator — pestaña Puertos</p><code>assets/images/betaflight-ports.jpg</code></div>'">
+        <div class="img-caption">Betaflight Configurator — Configuración de Puertos UART</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VINCULACIÓN EMISORA-RECEPTOR -->
+  <section class="section" id="vinculacion">
+    <div class="container">
+      <div class="reveal" style="margin-bottom: var(--space-2xl);">
+        <p class="section-label">Enlace de Radio</p>
+        <h2 class="heading-xl" style="margin-bottom: var(--space-md);">Vinculación LiteRadio 2 SE ↔ SuperD ELRS</h2>
+      </div>
+
+      <!-- Actualización de firmware -->
+      <div class="card reveal" style="margin-bottom: var(--space-xl);">
+        <div class="card-header">
+          <div class="card-icon" style="background: var(--warning-soft); color: var(--warning);">⚠️</div>
+          <h3>Paso Previo: Actualizar Firmware LiteRadio 2 SE a ELRS V3</h3>
+        </div>
+        <div class="card-body">
+          <div class="alert-box alert-warning">
+            <strong>Incompatibilidad de versiones:</strong> Los receptores SuperD ELRS se suministran con firmware
+            V3.x.x. Las LiteRadio 2 SE antiguas tienen firmware V2.x.x. ELRS V2 y V3 son <strong>incompatibles entre
+              sí</strong> y no se pueden vincular.
+          </div>
+
+          <h4 style="margin: var(--space-lg) 0 var(--space-md); font-family: var(--font-heading);">Procedimiento de
+            actualización:</h4>
+
+          <div class="bind-method">
+            <div class="bind-method-header">
+              <span>💾</span> Actualización de Firmware LiteRadio 2 SE
+            </div>
+            <div class="bind-method-body">
+              <div class="bind-step">
+                <div class="bind-step-num">1</div>
+                <p>Descargar <strong>BETAFPV Configurator V2.0.0-RC2</strong> y el archivo
+                  <code>LiteRadio_2_SE_V2_SX1280_3.0.0_2023_11_07.bin</code>.
+                </p>
+              </div>
+              <div class="bind-step">
+                <div class="bind-step-num">2</div>
+                <p>Con la LiteRadio <strong>apagada</strong>, presionar y mantener el botón <strong>SETUP</strong> en la
+                  parte posterior.</p>
+              </div>
+              <div class="bind-step">
+                <div class="bind-step-num">3</div>
+                <p>Manteniendo SETUP presionado, <strong>encender la LiteRadio</strong>. El LED anular brillará azul
+                  continuo — indica modo Bootloader DFU.</p>
+              </div>
+              <div class="bind-step">
+                <div class="bind-step-num">4</div>
+                <p>Conectar la LiteRadio a la PC con <strong>cable USB-C de datos</strong> (no solo carga).</p>
+              </div>
+              <div class="bind-step">
+                <div class="bind-step-num">5</div>
+                <p>Abrir BETAFPV Configurator, seleccionar el puerto COM y hacer clic en <strong>Conectar</strong>.</p>
+              </div>
+              <div class="bind-step">
+                <div class="bind-step-num">6</div>
+                <p>Cargar el archivo <code>.bin</code> y presionar <strong>"Write to TX"</strong>. Esperar al 100%.</p>
+              </div>
+              <div class="bind-step">
+                <div class="bind-step-num">7</div>
+                <p><strong>Calibrar gimbals obligatoriamente</strong> después de la actualización desde la pestaña de
+                  calibración.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Métodos de vinculación -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: var(--space-xl);">
+
+        <div class="card reveal">
+          <div class="card-header">
+            <div class="card-icon" style="background: var(--success-soft);">⭐</div>
+            <h3>Método Recomendado: Binding Phrase</h3>
+          </div>
+          <div class="card-body">
+            <p>Vinculación criptográfica mediante <strong>frase de emparejamiento</strong>. Ideal para el taller escolar
+              porque evita colisiones de señal entre múltiples pilotos.</p>
+
+            <div class="bind-method" style="margin-top: var(--space-md);">
+              <div class="bind-method-header"><span>🔑</span> Pasos</div>
+              <div class="bind-method-body">
+                <div class="bind-step">
+                  <div class="bind-step-num">1</div>
+                  <p>Abrir <strong>ExpressLRS Configurator</strong>. Seleccionar: <em>BETAFPV 2.4 GHz → SuperD 2.4GHz
+                      RX</em>.</p>
+                </div>
+                <div class="bind-step">
+                  <div class="bind-step-num">2</div>
+                  <p>Ingresar la <strong>Binding Phrase</strong> (ej: <code>TALLER_FPV_CHILE_2026</code>).</p>
+                </div>
+                <div class="bind-step">
+                  <div class="bind-step-num">3</div>
+                  <p>Compilar y flashear el receptor via <strong>Passthrough</strong> (USB conectado a la FC).</p>
+                </div>
+                <div class="bind-step">
+                  <div class="bind-step-num">4</div>
+                  <p>En BETAFPV Configurator, ingresar la <strong>misma frase</strong> en la emisora y guardar.</p>
+                </div>
+                <div class="bind-step">
+                  <div class="bind-step-num">5</div>
+                  <p>Al encender ambos dispositivos, la vinculación ocurre <strong>automáticamente</strong>.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card reveal reveal-delay-1">
+          <div class="card-header">
+            <div class="card-icon">🔌</div>
+            <h3>Método Alternativo: Vinculación por Ciclos</h3>
+          </div>
+          <div class="card-body">
+            <p>Si no hay frase de emparejamiento definida, se puede vincular físicamente con el siguiente procedimiento:
+            </p>
+
+            <div class="bind-method" style="margin-top: var(--space-md);">
+              <div class="bind-method-header"><span>🔁</span> Pasos</div>
+              <div class="bind-method-body">
+                <div class="bind-step">
+                  <div class="bind-step-num">1</div>
+                  <p>Conectar batería LiPo, esperar 1 segundo, <strong>desconectar inmediatamente</strong>.</p>
+                </div>
+                <div class="bind-step">
+                  <div class="bind-step-num">2</div>
+                  <p>Repetir: conectar y desconectar rápidamente (segunda vez).</p>
+                </div>
+                <div class="bind-step">
+                  <div class="bind-step-num">3</div>
+                  <p><strong>Conectar por tercera vez</strong> y mantener. El LED del receptor parpadeará naranja doble
+                    rápido = modo bind.</p>
+                </div>
+                <div class="bind-step">
+                  <div class="bind-step-num">4</div>
+                  <p>Encender la LiteRadio 2 SE y presionar el botón <strong>BIND</strong> en la parte trasera.</p>
+                </div>
+                <div class="bind-step">
+                  <div class="bind-step-num">5</div>
+                  <p>El LED del receptor cambia a <strong>verde sólido</strong> = vinculación exitosa.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Imagen de la emisora y receptor -->
+      <div class="img-grid reveal" style="margin-top: var(--space-xl);">
+        <div class="img-frame">
+          <img src="assets/images/literadio-2-se.jpg" alt="Emisora LiteRadio 2 SE"
+            onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'><div class=\'img-placeholder-icon\'>📻</div><p>Emisora BetaFPV LiteRadio 2 SE</p><code>assets/images/literadio-2-se.jpg</code></div>'">
+          <div class="img-caption">Emisora BetaFPV LiteRadio 2 SE (requiere actualización a ELRS V3)</div>
+        </div>
+        <div class="img-frame">
+          <img src="assets/images/receptor-superd-instalado.jpg" alt="Receptor SuperD instalado en el dron"
+            onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'><div class=\'img-placeholder-icon\'>📡</div><p>Receptor SuperD ELRS instalado en el dron con antenas posicionadas</p><code>assets/images/receptor-superd-instalado.jpg</code></div>'">
+          <div class="img-caption">Receptor SuperD instalado — antenas perpendiculares alejadas del carbono</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESUMEN FINAL / CHECKLIST -->
+  <section class="section" style="background: var(--bg-tertiary);" id="checklist">
+    <div class="container">
+      <div class="text-center reveal" style="margin-bottom: var(--space-2xl);">
+        <p class="section-label">Verificación Final</p>
+        <h2 class="heading-xl" style="margin-bottom: var(--space-md);">Checklist Pre-vuelo</h2>
+      </div>
+
+      <div class="card reveal" style="max-width: 700px; margin: 0 auto;">
+        <div class="card-body">
+          <div class="warning-box green">
+            <div class="warning-icon">✅</div>
+            <p>Todos los pernos con Loctite 242 apretados</p>
+          </div>
+          <div class="warning-box green">
+            <div class="warning-icon">✅</div>
+            <p>Ningún cable toca la fibra de carbono directamente</p>
+          </div>
+          <div class="warning-box green">
+            <div class="warning-icon">✅</div>
+            <p>Condensador soldado con polaridad correcta</p>
+          </div>
+          <div class="warning-box green">
+            <div class="warning-icon">✅</div>
+            <p>Betaflight: protocolo DSHOT300, DShot bidireccional activado, 14 polos</p>
+          </div>
+          <div class="warning-box green">
+            <div class="warning-icon">✅</div>
+            <p>Receptor vinculado y canales mapeados en AETR1234</p>
+          </div>
+          <div class="warning-box green">
+            <div class="warning-icon">✅</div>
+            <p>Motor 1-4 giran en la dirección correcta (verificar sin hélices)</p>
+          </div>
+          <div class="warning-box red">
+            <div class="warning-icon">🚨</div>
+            <p><strong>HÉLICES FUERA</strong> durante todas las pruebas de configuración</p>
+          </div>
+          <div class="warning-box green">
+            <div class="warning-icon">✅</div>
+            <p>VTX en Pitmode durante pruebas estáticas</p>
+          </div>
+          <div class="warning-box green">
+            <div class="warning-icon">✅</div>
+            <p>Modelo 3D en Betaflight se mueve igual que el dron real</p>
+          </div>
+          <div class="warning-box green">
+            <div class="warning-icon">✅</div>
+            <p>Batería LiPo cargada correctamente y sin daños visibles</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center reveal" style="margin-top: var(--space-2xl);">
+        <a href="modulo-teorico.html" class="btn btn-secondary btn-lg" style="margin-right: var(--space-md);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+          </svg>
+          Volver al Módulo Teórico
+        </a>
+        <a href="index.html" class="btn btn-primary btn-lg btn-shimmer ripple">
+          Inicio del Proyecto
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+            <polyline points="9,22 9,12 15,12 15,22" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-icon">🔧</div>
+        <div class="footer-brand">Liceo Bicentenario de Excelencia Polivalente San Nicolás</div>
+        <div class="footer-info">
+          Especialidad de Operaciones de Drones<br>
+          Módulo Armado y Configuración — Dron FPV Manta 3.6"<br>
+          <strong>Ing. Christopher Ruiz</strong>
+        </div>
+        <div class="footer-credit">Material educativo para uso institucional.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/theme.js"></script>
+  <script src="assets/js/utils.js"></script>
+</body>
+
+</html>

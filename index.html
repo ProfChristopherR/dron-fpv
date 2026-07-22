@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dron FPV Manta 3.6" | Taller Especialidad de Operaciones de Drones — Liceo Bicentenario San Nicolás</title>
+  <meta name="description" content="Guía completa para el armado, configuración y teoría del dron FPV Manta 3.6 pulgadas. Módulo teórico y práctico para el taller de robótica aérea.">
+  <link rel="icon" type="image/webp" href="assets/images/logo-liceo.webp">
+  <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" role="navigation" aria-label="Navegación principal">
+    <div class="navbar-inner">
+      <a href="index.html" class="navbar-brand">
+        <img src="assets/images/logo-liceo.webp" alt="Logo Liceo Bicentenario San Nicolás" width="44" height="44">
+        <div class="brand-text">
+          <span class="brand-name">Liceo Bicentenario — Operaciones de Drones</span>
+          <span class="brand-sub">Dron FPV Manta 3.6"</span>
+        </div>
+      </a>
+
+      <div class="navbar-nav" id="main-nav">
+        <a href="index.html" class="nav-link">Inicio</a>
+        <a href="modulo-teorico.html" class="nav-link">Módulo Teórico</a>
+        <a href="modulo-armado.html" class="nav-link">Armado y Config.</a>
+      </div>
+
+      <div class="navbar-actions">
+        <button class="theme-toggle" aria-label="Cambiar tema" title="Cambiar entre tema claro y oscuro">
+          <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="mobile-menu-btn" aria-label="Abrir menú" aria-expanded="false" aria-controls="main-nav">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO / PORTADA -->
+  <section class="hero" id="inicio">
+    <div class="hero-bg" style="background-image: url('assets/images/hero-fpv.webp');"></div>
+    <div class="hero-particles"></div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <div class="hero-badge-dot"></div>
+        Liceo Bicentenario de Excelencia Polivalente San Nicolás — Especialidad de Drones
+      </div>
+      <h1 class="hero-title display">
+        Proyecto <span class="accent">Dron FPV</span><br>Manta 3.6"
+      </h1>
+      <p class="hero-subtitle heading-lg text-muted">
+        Taller de Robótica Aérea — Armado y Configuración
+      </p>
+      <p class="body-lg" style="margin-bottom: var(--space-xl); max-width: 680px; margin-left: auto; margin-right: auto;">
+        Aprende desde cero cómo funciona un dron FPV de alta performance, sus componentes electrónicos, principios de vuelo, y el proceso completo de armado y configuración del <strong>AxisFlying Manta 3.6"</strong>.
+      </p>
+
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-value">3.6"</div>
+          <div class="hero-stat-label">Tamaño de hélice</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-value">6S</div>
+          <div class="hero-stat-label">Batería LiPo</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-value">2</div>
+          <div class="hero-stat-label">Módulos</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-value">FPV</div>
+          <div class="hero-stat-label">First Person View</div>
+        </div>
+      </div>
+
+      <div class="hero-actions">
+        <a href="modulo-teorico.html" class="btn btn-primary btn-lg btn-shimmer ripple" id="btn-modulo-teorico">
+          Módulo Teórico
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="modulo-armado.html" class="btn btn-secondary btn-lg" id="btn-modulo-armado">
+          Armado y Config.
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+        </a>
+      </div>
+    </div>
+    <a href="#modulos" class="hero-scroll" aria-label="Desplazarse hacia abajo">
+      <span>Explorar módulos</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    </a>
+  </section>
+
+  <!-- MÓDULOS PRINCIPALES -->
+  <section class="section" id="modulos">
+    <div class="container">
+      <div class="text-center reveal" style="margin-bottom: var(--space-2xl);">
+        <p class="section-label">Contenido del Proyecto</p>
+        <h2 class="heading-xl" style="margin-bottom: var(--space-md);">Dos Módulos de Aprendizaje</h2>
+        <p class="body-lg" style="max-width: 600px; margin: 0 auto;">
+          Material desarrollado específicamente para el taller escolar. Desde la teoría del vuelo FPV hasta el armado y configuración del dron Manta 3.6 pulgadas.
+        </p>
+      </div>
+
+      <div class="modules-grid">
+        <!-- Módulo Teórico -->
+        <a href="modulo-teorico.html" class="module-card reveal reveal-delay-1 glow-card" id="card-modulo-teorico">
+          <div class="module-icon-wrap orange">📡</div>
+          <div>
+            <span class="badge badge-orange" style="margin-bottom: var(--space-sm);">Módulo 1</span>
+            <h3>Fundamentos del Vuelo FPV</h3>
+            <p>Aprende la teoría completa: qué es FPV, cómo funciona cada componente electrónico, los modos de vuelo, protocolos de radio, tipos de baterías y normativa aeronáutica.</p>
+          </div>
+          <div class="module-topics">
+            <span class="module-topic-tag">¿Qué es FPV?</span>
+            <span class="module-topic-tag">Partes del Dron</span>
+            <span class="module-topic-tag">Modos de Vuelo</span>
+            <span class="module-topic-tag">Protocolo ELRS</span>
+            <span class="module-topic-tag">Baterías LiPo</span>
+            <span class="module-topic-tag">Normativa DGAC</span>
+          </div>
+          <span class="btn btn-ghost" style="margin-top: auto;">
+            Entrar al módulo
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+        </a>
+
+        <!-- Módulo Armado -->
+        <a href="modulo-armado.html" class="module-card reveal reveal-delay-2 glow-card" id="card-modulo-armado">
+          <div class="module-icon-wrap blue">🔧</div>
+          <div>
+            <span class="badge badge-blue" style="margin-bottom: var(--space-sm);">Módulo 2</span>
+            <h3>Armado y Configuración del Manta 3.6"</h3>
+            <p>Guía paso a paso del ensamblaje físico, soldadura, conexionado eléctrico y configuración en Betaflight del dron específico del taller.</p>
+          </div>
+          <div class="module-topics">
+            <span class="module-topic-tag">Chasis AxisFlying</span>
+            <span class="module-topic-tag">Motores C206</span>
+            <span class="module-topic-tag">Stack Argus F7</span>
+            <span class="module-topic-tag">Soldadura ESC</span>
+            <span class="module-topic-tag">Betaflight</span>
+            <span class="module-topic-tag">Vinculación ELRS</span>
+          </div>
+          <span class="btn btn-ghost" style="margin-top: auto;">
+            Entrar al módulo
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESUMEN DE COMPONENTES -->
+  <section class="section" style="background: var(--bg-tertiary);" id="componentes">
+    <div class="container">
+      <div class="text-center reveal" style="margin-bottom: var(--space-2xl);">
+        <p class="section-label">Hardware del Proyecto</p>
+        <h2 class="heading-xl" style="margin-bottom: var(--space-md);">Componentes del Manta 3.6"</h2>
+        <p class="body-lg" style="max-width: 600px; margin: 0 auto;">
+          Los componentes de alto rendimiento que forman parte de esta plataforma de robótica aérea.
+        </p>
+      </div>
+
+      <div class="component-grid">
+        <div class="component-card reveal reveal-delay-1">
+          <div class="component-emoji">🏗️</div>
+          <div class="component-name">Chasis Manta 3.6"</div>
+          <div class="component-spec">AxisFlying Lite</div>
+          <p class="component-desc">Fibra de carbono T700 de grado aeronáutico. Diseño Squashed-X con brazos de 4 mm.</p>
+        </div>
+        <div class="component-card reveal reveal-delay-2">
+          <div class="component-emoji">⚙️</div>
+          <div class="component-name">Motores C206</div>
+          <div class="component-spec">2750KV — 6S</div>
+          <p class="component-desc">Motor brushless AxisFlying, patrón de anclaje 9×9 mm, imanes de neodimio de alta temperatura.</p>
+        </div>
+        <div class="component-card reveal reveal-delay-3">
+          <div class="component-emoji">💻</div>
+          <div class="component-name">Stack Argus Mini F7</div>
+          <div class="component-spec">FC + ESC 55A</div>
+          <p class="component-desc">Controladora F7 con giroscopio ICM-42688P y variador AM32 de 55A en 20×20 mm.</p>
+        </div>
+        <div class="component-card reveal reveal-delay-4">
+          <div class="component-emoji">📡</div>
+          <div class="component-name">SuperD ELRS 2.4G</div>
+          <div class="component-spec">BetaFPV Diversity</div>
+          <p class="component-desc">Receptor de diversidad con dos antenas para máxima resiliencia de señal en 2.4 GHz.</p>
+        </div>
+        <div class="component-card reveal reveal-delay-1">
+          <div class="component-emoji">📷</div>
+          <div class="component-name">Cámara Caddx FPV</div>
+          <div class="component-spec">CMOS — WDR</div>
+          <p class="component-desc">Sensor CMOS con rango dinámico amplio para transiciones de luz rápidas durante el vuelo.</p>
+        </div>
+        <div class="component-card reveal reveal-delay-2">
+          <div class="component-emoji">📺</div>
+          <div class="component-name">VTX Rush Tank Mini</div>
+          <div class="component-spec">5.8 GHz — 500mW</div>
+          <p class="component-desc">Transmisor de video analógico en banda 5.8 GHz, potencia ajustable hasta 800mW con SmartAudio.</p>
+        </div>
+        <div class="component-card reveal reveal-delay-3">
+          <div class="component-emoji">🔋</div>
+          <div class="component-name">Batería LiPo 6S</div>
+          <div class="component-spec">22.2V / LiHV</div>
+          <p class="component-desc">Batería de polímero de litio de 6 celdas. Conector XT60. Alta tasa de descarga en factor C.</p>
+        </div>
+        <div class="component-card reveal reveal-delay-4">
+          <div class="component-emoji">📻</div>
+          <div class="component-name">LiteRadio 2 SE</div>
+          <div class="component-spec">BetaFPV — ELRS V3</div>
+          <p class="component-desc">Emisora de radio compacta con módulo ELRS integrado, requiere actualización a V3 para vinculación.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ESTADÍSTICAS -->
+  <section class="section">
+    <div class="container">
+      <div class="stats-row reveal">
+        <div class="stat-card">
+          <div class="stat-value">3.6"</div>
+          <div class="stat-label">Hélices Gemfan</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">55A</div>
+          <div class="stat-label">Corriente ESC máx.</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">4kHz</div>
+          <div class="stat-label">Loop PID Betaflight</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">6S</div>
+          <div class="stat-label">Voltaje batería</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">400ft</div>
+          <div class="stat-label">Techo DGAC</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-icon">🚁</div>
+        <div class="footer-brand">Liceo Bicentenario de Excelencia Polivalente San Nicolás</div>
+        <div class="footer-info">
+          Especialidad de Operaciones de Drones<br>
+          Taller: Armado y Configuración Dron FPV Manta 3.6"<br>
+          <strong>Ing. Christopher Ruiz</strong>
+        </div>
+        <div class="footer-credit">
+          Material educativo para uso institucional.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/theme.js"></script>
+  <script src="assets/js/utils.js"></script>
+</body>
+</html>
